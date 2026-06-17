@@ -32,7 +32,6 @@ jobs:
         run: npx playwright install --with-deps chromium
 
       - name: Run Playwright tests
-
         run: npx playwright test --project=chromium || true
         env:
           REDMINE_USER: ${{ secrets.REDMINE_USER }}
@@ -55,6 +54,12 @@ jobs:
           allure_results: allure-results
           allure_history: allure-history
           keep_reports: 20
+
+      - name: Create redirect to latest report
+        if: always()
+        run: |
+          mkdir -p allure-history
+          echo '<meta http-equiv="refresh" content="0;URL='${{ github.run_number }}'/">' > allure-history/index.html
 
       - name: Deploy Allure report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
