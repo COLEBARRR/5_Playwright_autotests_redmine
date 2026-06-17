@@ -17,7 +17,6 @@ export default defineConfig({
     ['allure-playwright']
   ],
   use: {
-    // Если в env нет BASE_URL, берем дефолтный
     baseURL: process.env.BASE_URL ?? 'https://www.redmine.org',
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
@@ -34,8 +33,6 @@ export default defineConfig({
   outputDir: 'test-results'
 });
 
-// Добавляем глобальные константы в процесс, чтобы тесты могли их прочитать,
-// если они не заданы снаружи через ENV
 process.env.SEARCH_KEYWORD = process.env.SEARCH_KEYWORD ?? 'Test';
 process.env.ACTIVITY_USER = process.env.ACTIVITY_USER ?? 'Go MAEDA';
 process.env.ACTIVITY_DATE = process.env.ACTIVITY_DATE ?? '2026-06-16';

@@ -41,11 +41,8 @@ export class IssuesPage {
   }
 
   async setTrackerFilter(operatorLabel: string, valueLabel: string): Promise<void> {
-    // Находим селект оператора (равно, не равно и т.д.) для трекера
     const operatorSelect = this.page.locator('select[name="op[tracker_id]"], #operators_tracker_id');
     await this.selectByLabelOrValue(operatorSelect, operatorLabel);
-
-    // Находим селект значения трекера (используем partial селектор, так как там может быть id_1)
     const valueSelect = this.page.locator('select[name="v[tracker_id][]"], [id^="values_tracker_id"]');
     await this.selectByLabelOrValue(valueSelect, valueLabel);
   }
@@ -55,15 +52,9 @@ export class IssuesPage {
     const normalized = valueLabel.toLowerCase().trim();
 
     if (normalized === 'closed' || normalized === 'c') {
-      // Если передано 'closed', просто ставим оператор "закрыто" ('c')
-      // В Redmine это скрывает/отключает выбор конкретного значения
       await this.selectByLabelOrValue(operatorSelect, 'closed');
     } else {
-      // Для остальных конкретных статусов (например, если захотите передать 'Closed' как текст значения, 'New' и т.д.)
-      // Сначала ставим оператор "="
       await this.selectByLabelOrValue(operatorSelect, 'corresponds');
-      
-      // Затем выбираем конкретное значение во втором дропдауне
       const valueSelect = this.page.locator('select[name="v[status_id][]"], [id^="values_status_id"]');
       await this.selectByLabelOrValue(valueSelect, valueLabel);
     }
@@ -71,7 +62,6 @@ export class IssuesPage {
 
   async applyFilters(): Promise<void> {
     await this.applyButton.click();
-    // Ждем, пока таблица обновится (исчезнет/появится или просто станет видимой)
     await expect(this.issuesTable).toBeVisible();
   }
 
@@ -89,13 +79,12 @@ export class IssuesPage {
     }
   }
 
-  // Наш универсальный интеллектуальный хелпер для работы с селектами Redmine
+
   private async selectByLabelOrValue(select: Locator, valueOrLabel: string): Promise<void> {
     await expect(select).toBeVisible({ timeout: 5000 });
 
     const normalized = valueOrLabel.toLowerCase().trim();
 
-    // 1. Обработка операторов Redmine
     if (normalized === 'corresponds' || normalized === '=') {
       await select.selectOption('=');
       return;
@@ -113,12 +102,9 @@ export class IssuesPage {
       return;
     }
 
-    // 2. Если это обычный текст (например, 'Defect', 'Closed', 'Дефект')
-    // Пробуем сначала выбрать по тексту (label)
     try {
       await select.selectOption({ label: valueOrLabel });
     } catch (e) {
-      // Если упало, пробуем выбрать по значению (value) или по совпадению регистра
       await select.selectOption(valueOrLabel);
     }
   }
