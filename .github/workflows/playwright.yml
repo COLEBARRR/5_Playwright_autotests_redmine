@@ -38,6 +38,13 @@ jobs:
           REDMINE_PASS: ${{ secrets.REDMINE_PASS }}
           REDMINE_2FA_SECRET: ${{ secrets.REDMINE_2FA_SECRET }}
 
+      # СОЗДАЕМ ПАПКУ И РЕДИРЕКТ ЗАРАНЕЕ под обычным пользователем runner, чтобы не было Permission denied
+      - name: Pre-create allure-history and index redirect
+        if: always()
+        run: |
+          mkdir -p allure-history
+          echo '<meta http-equiv="refresh" content="0;URL='${{ github.run_number }}'/">' > allure-history/index.html
+
       - name: Allure Report Action
         uses: simple-elf/allure-report-action@master
         if: always()
