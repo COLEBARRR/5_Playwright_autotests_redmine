@@ -1,0 +1,6 @@
+"DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
+"","4958","C005 - Downloading the latest release package in .zip format","chromium","2026-06-17","passed","2026-06-17","Test cases for https://www.redmine.org/","redmine.spec.ts","",""
+"","4081","C001 - Authorization of a registered user using valid data","chromium","2026-06-17","passed","2026-06-17","Test cases for https://www.redmine.org/","redmine.spec.ts","",""
+"","3639","C004 - Filtering activity log by specific user","chromium","2026-06-17","passed","2026-06-17","Test cases for https://www.redmine.org/","redmine.spec.ts","",""
+"","2716","C002 - Searching for existing entities via the global search bar","chromium","2026-06-17","passed","2026-06-17","Test cases for https://www.redmine.org/","redmine.spec.ts","",""
+"","4556","C003 - Adding filters for ""Issues"" table","chromium","2026-06-17","passed","2026-06-17","Test cases for https://www.redmine.org/","redmine.spec.ts","",""
