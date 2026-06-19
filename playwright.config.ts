@@ -18,6 +18,7 @@ export default defineConfig({
   ],
   use: {
     baseURL: process.env.BASE_URL ?? 'https://www.redmine.org',
+    viewport: { width: 1920, height: 1080 },
     trace: 'on-first-retry',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
@@ -32,7 +33,3 @@ export default defineConfig({
   ],
   outputDir: 'test-results'
 });
-
-process.env.SEARCH_KEYWORD = process.env.SEARCH_KEYWORD ?? 'Test';
-process.env.ACTIVITY_USER = process.env.ACTIVITY_USER ?? 'Go MAEDA';
-process.env.ACTIVITY_DATE = process.env.ACTIVITY_DATE ?? '2026-06-16';

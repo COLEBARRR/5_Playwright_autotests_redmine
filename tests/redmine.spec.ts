@@ -8,6 +8,7 @@ import { IssuesPage } from '../pages/IssuesPage';
 import { LoginPage } from '../pages/LoginPage';
 import { MainPage } from '../pages/MainPage';
 import { ProjectsPage } from '../pages/ProjectsPage';
+import { testData } from './data/testData';
 
 const requiredEnv = (name: string): string => {
   const value = process.env[name];
@@ -22,9 +23,7 @@ const requiredEnv = (name: string): string => {
 const redmineUser = requiredEnv('REDMINE_USER');
 const redminePass = requiredEnv('REDMINE_PASS');
 const redmineTwoFactorSecret = requiredEnv('REDMINE_2FA_SECRET');
-const searchKeyword = process.env.SEARCH_KEYWORD ?? 'Playwright';
-const activityUser = process.env.ACTIVITY_USER ?? 'Go MAEDA';
-const activityDate = process.env.ACTIVITY_DATE ?? '2026-06-16';
+
 
 test.describe('Test cases for https://www.redmine.org/', () => {
   test('C001 - Authorization of a registered user using valid data', async ({ page }) => {
@@ -70,13 +69,13 @@ test.describe('Test cases for https://www.redmine.org/', () => {
     });
 
     await test.step('Click on the "Search" field and enter the keyword', async () => {
-      await mainPage.search(searchKeyword);
-      await mainPage.expectSearchValue(searchKeyword);
+      await mainPage.search(testData.searchKeyword);
+      await mainPage.expectSearchValue(testData.searchKeyword);
     });
 
     await test.step('Press "Enter" key', async () => {
       await mainPage.submitSearch();
-      await mainPage.expectSearchResults(searchKeyword);
+      await mainPage.expectSearchResults(testData.searchKeyword);
     });
   });
 
@@ -134,16 +133,16 @@ test.describe('Test cases for https://www.redmine.org/', () => {
     });
 
     await test.step('Click on the "User" dropdown and select "Go MAEDA"', async () => {
-      await activityPage.selectUser(activityUser);
+      await activityPage.selectUser(testData.activityUser);
     });
 
     await test.step('Click on the Date and select "16.06.2026"', async () => {
-      await activityPage.setDate(activityDate);
+      await activityPage.setDate(testData.activityDate);
     });
 
     await test.step('Click "Apply"', async () => {
       await activityPage.apply();
-      await activityPage.expectActivitiesForUser(activityUser);
+      await activityPage.expectActivitiesForUser(testData.activityUser);
     });
   });
 
