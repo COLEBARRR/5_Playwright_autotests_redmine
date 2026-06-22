@@ -38,7 +38,6 @@ jobs:
           REDMINE_PASS: ${{ secrets.REDMINE_PASS }}
           REDMINE_2FA_SECRET: ${{ secrets.REDMINE_2FA_SECRET }}
 
-      # СОЗДАЕМ ПАПКУ И РЕДИРЕКТ ЗАРАНЕЕ под обычным пользователем runner, чтобы не было Permission denied
       - name: Pre-create allure-history and index redirect
         if: always()
         run: |
